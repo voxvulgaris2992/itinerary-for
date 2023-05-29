@@ -4,7 +4,7 @@
   <p><strong>Date:</strong> <%= @itinerary.date %></p>
   <p><strong>Start time:</strong> <%= @itinerary.start_time.strftime("%H:%M") %></p>
   <p><strong>End time:</strong> <%= @itinerary.end_time.strftime("%H:%M") %></p>
-  <p><strong>Budget:</strong> <%= @itinerary.budget %></p>
+  <p><strong>Budget:</strong> <%= budget_to_s(@itinerary.budget) %></p>
   <p><strong>Interests:</strong> <%= @itinerary.interests.join(', ') %></p>
 
   <h2>Events:</h2>

@@ -5,6 +5,7 @@ class ItinerariesController < ApplicationController
 
   def create
     @itinerary = Itinerary.new(itinerary_params)
+    @itinerary.interests.reject!(&:blank?)
     if @itinerary.save
       redirect_to itinerary_path(@itinerary)
     else

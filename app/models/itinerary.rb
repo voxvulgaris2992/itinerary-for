@@ -1,6 +1,6 @@
 class Itinerary < ApplicationRecord
   geocoded_by :address
-  after_validation :geocode, if: :will_save_change_to_address?
+  after_validation :geocode_and_validate
   has_many :events
   has_many :places
   validates :address, :budget, presence: true
@@ -36,5 +36,10 @@ class Itinerary < ApplicationRecord
       datetime = DateTime.new(date.year, date.month, date.day, end_time.hour, end_time.min, end_time.sec)
       errors.add(:end_time, "can't be in the past") if datetime < DateTime.now
     end
+  end
+
+  def geocode_and_validate
+    geocode
+    errors.add(:address, "could not be geocoded. Please enter a valid address.") if latitude.blank? || longitude.blank?
   end
 end
