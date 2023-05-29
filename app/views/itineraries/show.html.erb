@@ -1,0 +1,9 @@
+<div class="form-container" style="margin: 20px;">
+  <h1>Itinerary Details</h1>
+  <p><strong>Address:</strong> <%= @itinerary.address %></p>
+  <p><strong>Date:</strong> <%= @itinerary.date %></p>
+  <p><strong>Start Time:</strong> <%= @itinerary.start_time %></p>
+  <p><strong>End Time:</strong> <%= @itinerary.end_time %></p>
+  <p><strong>Budget:</strong> <%= @itinerary.budget %></p>
+  <p><strong>Interests:</strong> <%= @itinerary.interests.join(", ") %></p>
+</div>
