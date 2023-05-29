@@ -7,7 +7,7 @@
 
     <%= f.input :budget, collection: ['$', '$$', '$$$', '$$$$'], prompt: "Select Budget" %>
 
-    <%= f.input :interests, collection: ['History', 'Art & Culture', 'Dining', 'Drinks', 'Activity', 'Shopping', 'Outdoors', 'Attraction'], input_html: {multiple: true} %>
+    <%= f.input :interests, collection: ['History', 'Art & Culture', 'Dining', 'Drinks', 'Activity', 'Shopping', 'Outdoors', 'Attraction'], input_html: {multiple: true, include_hidden: false} %>
 
     <%= f.button :submit %>
   <% end %>

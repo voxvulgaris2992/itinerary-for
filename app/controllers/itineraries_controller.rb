@@ -8,7 +8,7 @@ class ItinerariesController < ApplicationController
     if @itinerary.save
       redirect_to itinerary_path(@itinerary)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -20,6 +20,6 @@ class ItinerariesController < ApplicationController
   private
 
   def itinerary_params
-    params.require(:itinerary).permit(:address, :date, :start_time, :end_time, :budget, interests: [])
+    params.require(:itinerary).permit(:address, :date, :start_time, :end_time, :budget).merge(interests: params[:itinerary][:interests] || [])
   end
 end
