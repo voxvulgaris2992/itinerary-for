@@ -1,4 +1,6 @@
 class Itinerary < ApplicationRecord
+  geocoded_by :address
+  after_validation :geocode, if: :will_save_change_to_address?
   has_many :events
   has_many :places
   validates :address, :budget, presence: true
