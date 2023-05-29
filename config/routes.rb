@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  root to: "pages#home"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root 'itineraries#new' # direct root to the new action of ItinerariesController
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :itineraries, only: [:create, :show] # routes for create and show actions
 end

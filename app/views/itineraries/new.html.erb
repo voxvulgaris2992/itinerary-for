@@ -1,0 +1,14 @@
+<div class="form-container" style="margin: 20px;">
+  <%= simple_form_for(@itinerary) do |f| %>
+    <%= f.input :address %>
+    <%= f.input :date %>
+    <%= f.input :start_time %>
+    <%= f.input :end_time %>
+
+    <%= f.input :budget, collection: ['$', '$$', '$$$', '$$$$'], prompt: "Select Budget" %>
+
+    <%= f.input :interests, collection: ['History', 'Art & Culture', 'Dining', 'Drinks', 'Activity', 'Shopping', 'Outdoors', 'Attraction'], input_html: {multiple: true} %>
+
+    <%= f.button :submit %>
+  <% end %>
+</div>
