@@ -1,9 +1,18 @@
 <div class="form-container" style="margin: 20px;">
-  <h1>Itinerary Details</h1>
+  <h1>Itinerary Details:</h1>
   <p><strong>Address:</strong> <%= @itinerary.address %></p>
   <p><strong>Date:</strong> <%= @itinerary.date %></p>
-  <p><strong>Start Time:</strong> <%= @itinerary.start_time %></p>
-  <p><strong>End Time:</strong> <%= @itinerary.end_time %></p>
+  <p><strong>Start time:</strong> <%= @itinerary.start_time %></p>
+  <p><strong>End time:</strong> <%= @itinerary.end_time %></p>
   <p><strong>Budget:</strong> <%= @itinerary.budget %></p>
-  <p><strong>Interests:</strong> <%= @itinerary.interests.join(", ") %></p>
+  <p><strong>Interests:</strong> <%= @itinerary.interests.join(', ') %></p>
+
+  <h2>Events:</h2>
+  <% @events.each do |event| %>
+    <div>
+      <h3><%= event.place.name %></h3>
+      <p><strong>Start time:</strong> <%= event.start_time %></p>
+      <p><strong>End time:</strong> <%= event.end_time %></p>
+    </div>
+  <% end %>
 </div>

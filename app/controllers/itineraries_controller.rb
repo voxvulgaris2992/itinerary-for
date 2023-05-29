@@ -14,6 +14,7 @@ class ItinerariesController < ApplicationController
 
   def show
     @itinerary = Itinerary.find(params[:id])
+    @events = @itinerary.events
   end
 
   private
