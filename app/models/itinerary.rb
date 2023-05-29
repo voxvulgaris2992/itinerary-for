@@ -22,7 +22,8 @@ class Itinerary < ApplicationRecord
 
   def start_time_check
     if start_time.present?
-      if start_time < Time.now
+      datetime = DateTime.new(date.year, date.month, date.day, start_time.hour, start_time.min, start_time.sec)
+      if datetime < DateTime.now
         errors.add(:start_time, "can't be in the past")
       elsif start_time >= end_time
         errors.add(:start_time, "can't be later than end time")
@@ -31,6 +32,9 @@ class Itinerary < ApplicationRecord
   end
 
   def end_time_check
-    errors.add(:end_time, "can't be in the past") if end_time.present? && end_time < Time.now
+    if end_time.present?
+      datetime = DateTime.new(date.year, date.month, date.day, end_time.hour, end_time.min, end_time.sec)
+      errors.add(:end_time, "can't be in the past") if datetime < DateTime.now
+    end
   end
 end
