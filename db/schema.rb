@@ -10,8 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_29_154831) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "events", force: :cascade do |t|
+    t.bigint "itinerary_id", null: false
+    t.bigint "place_id", null: false
+    t.time "start_time"
+    t.time "end_time"
+    t.integer "counter"
+    t.text "directions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_id"], name: "index_events_on_itinerary_id"
+    t.index ["place_id"], name: "index_events_on_place_id"
+  end
+
+  create_table "itineraries", force: :cascade do |t|
+    t.text "address"
+    t.date "date"
+    t.time "start_time"
+    t.time "end_time"
+    t.integer "budget"
+    t.text "interests"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "places", force: :cascade do |t|
+    t.bigint "itinerary_id", null: false
+    t.text "name"
+    t.text "description"
+    t.text "address"
+    t.text "opening_hours"
+    t.text "phone"
+    t.text "map_static"
+    t.text "map_link"
+    t.text "review_count"
+    t.text "review_samples"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itinerary_id"], name: "index_places_on_itinerary_id"
+  end
+
+  add_foreign_key "events", "itineraries"
+  add_foreign_key "events", "places"
+  add_foreign_key "places", "itineraries"
 end
