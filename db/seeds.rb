@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+# db/seeds.rb
+interests = ['History', 'Art & Culture', 'Dining', 'Drinks', 'Activity', 'Shopping', 'Outdoors', 'Attraction']
+
+interests.each do |interest|
+  Interest.find_or_create_by(name: interest)
+end

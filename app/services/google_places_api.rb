@@ -23,8 +23,6 @@ class GooglePlacesApi
   end
 
   def get_places
-    places = []
-
     @itinerary.interests.each do |interest|
       INTEREST_TO_TYPE_MAPPING[interest].each do |type|
         results = make_request(type)
@@ -37,7 +35,8 @@ class GooglePlacesApi
             address: result['vicinity'],
             rating: result['rating'],
             description: result['url'], # using URL as the description
-            google_place_id: result['place_id']
+            google_place_id: result['place_id'],
+            itinerary_id: @itinerary.id # associate the place with the current itinerary
           }
 
           details = get_place_details(place[:google_place_id])
@@ -49,14 +48,16 @@ class GooglePlacesApi
           place[:review_samples] = place[:review_samples] || [] # Make sure review_samples is an array
           place[:opening_hours] = place[:opening_hours] || [] # Make sure opening_hours is an array
 
-          places << place
+          # Find or create the Interest
+          interest_record = Interest.find_or_create_by(name: interest)
+          # Build the new Place record and associate the Interest
+          place_record = Place.new(place.merge(itinerary: @itinerary))
+          place_record.interests << interest_record
+          place_record.save
         end if results['results']
       end
     end
-
-    places
   end
-
 
   private
 
