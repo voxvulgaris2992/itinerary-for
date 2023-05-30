@@ -11,23 +11,26 @@
   <% first_place = @places.first %>
   <% if first_place %>
     <div>
-      <h3><%= first_place[:name] %></h3>
-      <% if first_place[:image] %>
-        <img src="<%= first_place[:image] %>" alt="<%= first_place[:name] %> image">
+      <h3><%= first_place.name %></h3>
+      <% if first_place.image %>
+        <img src="<%= first_place.image %>" alt="<%= first_place.name %> image">
       <% end %>
-      <p><strong>Address:</strong> <%= first_place[:address] %></p>
-      <p><strong>Rating:</strong> <%= first_place[:rating] %></p>
-      <p><strong>Description:</strong> <%= first_place[:description] %></p>
-      <p><strong>Opening Hours:</strong> <%= first_place[:opening_hours]&.join(", ") %></p>
-      <p><strong>Phone:</strong> <%= first_place[:phone] %></p>
-      <p><strong>Map Static:</strong> <%= first_place[:map_static] %></p>
-      <p><strong>Map Link:</strong> <%= first_place[:map_link] %></p>
-      <p><strong>Review Count:</strong> <%= first_place[:review_count] %></p>
-      <% if first_place[:review_samples] %>
-        <% first_place[:review_samples].each_with_index do |review, index| %>
+      <p><strong>Address:</strong> <%= first_place.address %></p>
+      <p><strong>Rating:</strong> <%= first_place.rating %></p>
+      <p><strong>Description:</strong> <%= first_place.description %></p>
+      <p><strong>Opening Hours:</strong> <%= first_place.opening_hours.join(', ') %></p>
+      <p><strong>Phone:</strong> <%= first_place.phone %></p>
+      <p><strong>Map Static:</strong> <%= image_tag first_place.map_static %></p>
+      <p><strong>Map Link:</strong> <%= link_to 'Google Maps', first_place.map_link %></p>
+      <p><strong>Review Count:</strong> <%= first_place.review_count %></p>
+      <% if first_place.review_samples.present? %>
+        <% first_place.review_samples.each_with_index do |review, index| %>
           <p><strong>Review <%= index + 1 %> :</strong> <%= review %></p>
         <% end %>
+      <% else %>
+        <p>No reviews available</p>
       <% end %>
+
     </div>
   <% else %>
     <p>No places found.</p>

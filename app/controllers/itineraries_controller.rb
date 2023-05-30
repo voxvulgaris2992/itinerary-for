@@ -16,11 +16,13 @@ class ItinerariesController < ApplicationController
   def show
     @itinerary = Itinerary.find(params[:id])
     api = GooglePlacesApi.new(@itinerary)
-    @places = api.get_places
+    places = api.get_places
+    places.each do |place_hash|
+      @itinerary.places.create(place_hash)
+    end
+    @places = @itinerary.places.reload
     @events = @itinerary.events
-
   end
-
 
   private
 
