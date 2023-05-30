@@ -7,6 +7,11 @@
   <p><strong>Budget:</strong> <%= budget_to_s(@itinerary.budget) %></p>
   <p><strong>Interests:</strong> <%= @itinerary.interests.join(', ') %></p>
 
+  <h2>Recommended Places:</h2>
+  <% @places.each do |place| %>
+    <p><%= place['name'] %></p>
+  <% end %>
+
   <h2>Events:</h2>
   <% @events.each do |event| %>
     <div>
