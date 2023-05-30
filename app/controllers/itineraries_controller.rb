@@ -15,12 +15,14 @@ class ItinerariesController < ApplicationController
 
   def show
     @itinerary = Itinerary.find(params[:id])
+    api = GooglePlacesApi.new(@itinerary)
+    @places = api.get_places
     @events = @itinerary.events
   end
 
   private
 
   def itinerary_params
-    params.require(:itinerary).permit(:address, :date, :start_time, :end_time, :budget).merge(interests: params[:itinerary][:interests] || [])
+    params.require(:itinerary).permit(:address, :date, :start_time, :end_time, :budget, interests: []).merge(interests: params[:itinerary][:interests] || [])
   end
 end
