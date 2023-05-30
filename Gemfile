@@ -48,6 +48,9 @@ gem "sassc-rails"
 # Geocoding to convert address into latitude and longitude
 gem 'geocoder'
 
+# Phone number formatting
+gem 'phony'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

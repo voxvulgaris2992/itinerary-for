@@ -18,7 +18,9 @@ class ItinerariesController < ApplicationController
     api = GooglePlacesApi.new(@itinerary)
     @places = api.get_places
     @events = @itinerary.events
+
   end
+
 
   private
 
