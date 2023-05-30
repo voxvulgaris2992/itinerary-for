@@ -42,6 +42,12 @@ class GooglePlacesApi
 
           details = get_place_details(place[:google_place_id])
           place.merge!(details)
+          place.delete(:google_place_id)
+          place.delete(:formatted_address)
+          place[:address] = details[:formatted_address]
+          place[:review_count] = place[:review_count].to_s
+          place[:review_samples] = place[:review_samples] || [] # Make sure review_samples is an array
+          place[:opening_hours] = place[:opening_hours] || [] # Make sure opening_hours is an array
 
           places << place
         end if results['results']
@@ -50,6 +56,7 @@ class GooglePlacesApi
 
     places
   end
+
 
   private
 
