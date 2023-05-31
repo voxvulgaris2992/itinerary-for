@@ -9,6 +9,8 @@ class ItinerariesController < ApplicationController
     if @itinerary.save
       api = GooglePlacesApi.new(@itinerary)
       api.get_places
+      builder = EventsBuilder.new(@itinerary)
+      @places, @selected_places = builder.build
       redirect_to itinerary_path(@itinerary)
     else
       render :new, status: :unprocessable_entity
@@ -17,8 +19,8 @@ class ItinerariesController < ApplicationController
 
   def show
     @itinerary = Itinerary.find(params[:id])
-    @events = @itinerary.events
-    @places = Place.where(itinerary_id: @itinerary.id)
+    builder = EventsBuilder.new(@itinerary)
+    @places, @selected_places = builder.build
   end
 
   private
