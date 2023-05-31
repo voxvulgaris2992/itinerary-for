@@ -8,14 +8,14 @@ class GooglePlacesApi
   DETAILS_URL = 'https://maps.googleapis.com/maps/api/place/details/json'.freeze
 
   INTEREST_TO_TYPE_MAPPING = {
-    'History' => ['museum', 'church', 'hindu_temple', 'mosque', 'synagogue'],
-    'Art & Culture' => ['art_gallery', 'museum', 'library'],
+    'History' => ['church', 'hindu_temple', 'mosque', 'synagogue'],
+    'Art & Culture' => ['art_gallery', 'library', 'museum'],
     'Dining' => ['restaurant', 'cafe', 'bakery'],
     'Drinks' => ['bar', 'night_club'],
-    'Activity' => ['amusement_park', 'bowling_alley', 'gym', 'spa', 'zoo', 'stadium'],
+    'Activity' => ['amusement_park', 'bowling_alley', 'gym', 'spa'],
     'Shopping' => ['clothing_store', 'department_store', 'electronics_store', 'shopping_mall', 'supermarket'],
     'Outdoors' => ['park', 'campground', 'rv_park'],
-    'Attraction' => ['tourist_attraction', 'aquarium', 'zoo', 'stadium', 'amusement_park']
+    'Attraction' => ['tourist_attraction', 'aquarium', 'zoo', 'stadium']
   }.freeze
 
   def initialize(itinerary)
@@ -44,12 +44,18 @@ class GooglePlacesApi
           place.delete(:google_place_id)
           place.delete(:formatted_address)
           place[:address] = details[:formatted_address]
+          place[:latitude] = details['geometry']['location']['lat'] if details['geometry'] && details['geometry']['location']
+          place[:longitude] = details['geometry']['location']['lng'] if details['geometry'] && details['geometry']['location']
           place[:review_count] = place[:review_count].to_s
           place[:review_samples] = place[:review_samples] || [] # Make sure review_samples is an array
           place[:opening_hours] = place[:opening_hours] || [] # Make sure opening_hours is an array
 
+          # Check for nil values in place hash excluding :image
+          next if place.except(:image).values.any?(&:nil?)
+
           # Find or create the Interest
           interest_record = Interest.find_or_create_by(name: interest)
+
           # Build the new Place record and associate the Interest
           place_record = Place.new(place.merge(itinerary: @itinerary))
           place_record.interests << interest_record
@@ -100,7 +106,7 @@ class GooglePlacesApi
       map_static: "https://maps.googleapis.com/maps/api/staticmap?center=#{result['geometry']['location']['lat']},#{result['geometry']['location']['lng']}&zoom=14&size=400x400&key=#{ENV['GOOGLE_API_KEY']}",
       review_count: result['user_ratings_total'],
       review_samples: review_samples,
-      image: image_url
+      image: image_url,
     }
 
     details

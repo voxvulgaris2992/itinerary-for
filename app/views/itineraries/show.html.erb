@@ -7,41 +7,31 @@
   <p><strong>Budget:</strong> <%= budget_to_s(@itinerary.budget) %></p>
   <p><strong>Interests:</strong> <%= @itinerary.interests.join(', ') %></p>
 
-  <h2>First Recommended Place:</h2>
-  <% first_place = @places.first %>
-  <% if first_place %>
-    <div>
-      <h3><%= first_place.name %></h3>
-      <% if first_place.image %>
-        <img src="<%= first_place.image %>" alt="<%= first_place.name %> image">
-      <% end %>
-      <p><strong>Address:</strong> <%= first_place.address %></p>
-      <p><strong>Rating:</strong> <%= first_place.rating %></p>
-      <p><strong>Description:</strong> <%= first_place.description %></p>
-      <p><strong>Opening Hours:</strong> <%= first_place.opening_hours.join(', ') %></p>
-      <p><strong>Phone:</strong> <%= first_place.phone %></p>
-      <p><strong>Map Static:</strong> <%= image_tag first_place.map_static %></p>
-      <p><strong>Map Link:</strong> <%= link_to 'Google Maps', first_place.map_link %></p>
-      <p><strong>Review Count:</strong> <%= first_place.review_count %></p>
-      <% if first_place.review_samples.present? %>
-        <% first_place.review_samples.each_with_index do |review, index| %>
-          <p><strong>Review <%= index + 1 %> :</strong> <%= review %></p>
+  <h2>Recommended Places:</h2>
+  <% if @selected_places.any? %>
+    <% @selected_places.each do |place| %>
+      <div>
+        <h3><%= place.name %></h3>
+        <% if place.image %>
+          <img src="<%= place.image %>" alt="<%= place.name %> image">
         <% end %>
-      <% else %>
-        <p>No reviews available</p>
-      <% end %>
-
-    </div>
+        <p><strong>Address:</strong> <%= place.address %></p>
+        <p><strong>Rating:</strong> <%= place.rating %></p>
+        <p><strong>Description:</strong> <%= place.description %></p>
+        <p><strong>Opening Hours:</strong> <%= place.opening_hours.join(', ') %></p>
+        <p><strong>Phone:</strong> <%= place.phone %></p>
+        <p><strong>Map Static:</strong> <%= image_tag(place.map_static) if place.map_static.present? %></p>
+        <p><strong>Map Link:</strong> <%= link_to 'Google Maps', place.map_link %></p>
+        <p><strong>Review Count:</strong> <%= place.review_count %></p>
+        <% if place.review_samples.present? %>
+          <% place.review_samples.each_with_index do |review, index| %>
+            <p><strong>Review <%= index + 1 %> :</strong> <%= review %></p>
+          <% end %>
+        <% else %>
+          <p>No reviews available</p>
+        <% end %>
+      </div>
+    <% end %>
   <% else %>
     <p>No places found.</p>
   <% end %>
-
-  <h2>Events:</h2>
-  <% @events.each do |event| %>
-    <div>
-      <h3><%= event.place.name %></h3>
-      <p><strong>Start time:</strong> <%= event.start_time.strftime("%H:%M") %></p>
-      <p><strong>End time:</strong> <%= event.end_time.strftime("%H:%M") %></p>
-    </div>
-  <% end %>
-</div>
