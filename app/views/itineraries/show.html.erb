@@ -1,37 +1,76 @@
-<div class="form-container" style="margin: 20px;">
-  <h1>Itinerary Details:</h1>
-  <p><strong>Address:</strong> <%= @itinerary.address %></p>
-  <p><strong>Date:</strong> <%= @itinerary.date %></p>
-  <p><strong>Start time:</strong> <%= @itinerary.start_time.strftime("%H:%M") %></p>
-  <p><strong>End time:</strong> <%= @itinerary.end_time.strftime("%H:%M") %></p>
-  <p><strong>Budget:</strong> <%= budget_to_s(@itinerary.budget) %></p>
-  <p><strong>Interests:</strong> <%= @itinerary.interests.join(', ') %></p>
+<div class="form-container my-5">
+  <h1 class="mb-4">Itinerary Details:</h1>
+  <div class="itinerary-details mb-4 d-flex justify-content-around flex-wrap">
+    <p><strong>Address:</strong> <%= @itinerary.address %></p>
+    <p><strong>Date:</strong> <%= @itinerary.date %></p>
+    <p><strong>Start time:</strong> <%= @itinerary.start_time.strftime("%H:%M") %></p>
+    <p><strong>End time:</strong> <%= @itinerary.end_time.strftime("%H:%M") %></p>
+    <p><strong>Budget:</strong> <%= budget_to_s(@itinerary.budget) %></p>
+    <p><strong>Interests:</strong> <%= @itinerary.interests.join(', ') %></p>
+  </div>
 
-  <h2>Recommended Places:</h2>
-  <% if @selected_places.any? %>
-    <% @selected_places.each do |place| %>
-      <div>
-        <h3><%= place.name %></h3>
-        <% if place.image %>
-          <img src="<%= place.image %>" alt="<%= place.name %> image">
-        <% end %>
-        <p><strong>Address:</strong> <%= place.address %></p>
-        <p><strong>Rating:</strong> <%= place.rating %></p>
-        <p><strong>Description:</strong> <%= place.description %></p>
-        <p><strong>Opening Hours:</strong> <%= place.opening_hours.join(', ') %></p>
-        <p><strong>Phone:</strong> <%= place.phone %></p>
-        <p><strong>Map Static:</strong> <%= image_tag(place.map_static) if place.map_static.present? %></p>
-        <p><strong>Map Link:</strong> <%= link_to 'Google Maps', place.map_link %></p>
-        <p><strong>Review Count:</strong> <%= place.review_count %></p>
-        <% if place.review_samples.present? %>
-          <% place.review_samples.each_with_index do |review, index| %>
-            <p><strong>Review <%= index + 1 %> :</strong> <%= review %></p>
-          <% end %>
-        <% else %>
-          <p>No reviews available</p>
-        <% end %>
-      </div>
+  <div class="row">
+    <% if @selected_places.any? %>
+      <% @selected_places.each do |place| %>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="image-container">
+              <% if place.image %>
+                <img src="<%= place.image %>" alt="<%= place.name %> image">
+              <% end %>
+            </div>
+            <div class="details">
+              <h3><%= place.name %></h3>
+              <p><strong>Rating:</strong> <%= place.rating %></p>
+              <p><strong>Review Count:</strong> <%= place.review_count %></p>
+              <p><strong>Address:</strong> <%= place.address %></p>
+              <p><strong>Description:</strong> <%= place.description %></p>
+              <p><strong>Phone:</strong> <%= place.phone %></p>
+              <button id="detailsButton<%= place.id %>" class="btn btn-primary" onclick="toggleDetails('<%= place.id %>')">Details</button>
+            </div>
+            <div id="additionalDetails<%= place.id %>" class="additional-details" style="display:none;">
+              <p><strong>Opening Hours:</strong></p>
+              <ul>
+                <% place.opening_hours.each do |hour| %>
+                  <li><%= hour %></li>
+                <% end %>
+              </ul>
+              <div class="image-container">
+                <% if place.map_static.present? %>
+                  <%= image_tag(place.map_static) %>
+                <% end %>
+              </div>
+              <p><strong>Map Link:</strong> <%= link_to 'Google Maps', place.map_link %></p>
+              <% if place.review_samples.present? %>
+                <% place.review_samples.each_with_index do |review, index| %>
+                  <p><strong>Review <%= index + 1 %> :</strong> <%= review %></p>
+                <% end %>
+              <% else %>
+                <p>No reviews available</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No places found.</p>
     <% end %>
-  <% else %>
-    <p>No places found.</p>
-  <% end %>
+  </div>
+</div>
+
+<script>
+  function toggleDetails(placeId) {
+    var button = document.getElementById(`detailsButton${placeId}`);
+    var details = document.getElementById(`additionalDetails${placeId}`);
+
+    if (details.style.display === "none") {
+      details.style.display = "block";
+      button.textContent = "Hide";
+      button.className = "btn btn-secondary";
+    } else {
+      details.style.display = "none";
+      button.textContent = "Details";
+      button.className = "btn btn-primary";
+    }
+  }
+</script>

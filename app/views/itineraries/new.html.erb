@@ -1,14 +1,17 @@
-<div class="form-container" style="margin: 20px;">
-  <%= simple_form_for(@itinerary) do |f| %>
-    <%= f.input :address %>
-    <%= f.input :date %>
-    <%= f.input :start_time %>
-    <%= f.input :end_time %>
-
-    <%= f.input :budget, collection: [['$', 1], ['$$', 2], ['$$$', 3], ['$$$$', 4]], prompt: "Select Budget" %>
-
-    <%= f.input :interests, collection: ['History', 'Art & Culture', 'Dining', 'Drinks', 'Activity', 'Shopping', 'Outdoors', 'Attraction'], input_html: {multiple: true, include_hidden: false} %>
-
-    <%= f.button :submit %>
-  <% end %>
+<div class="form-card-container">
+  <div class="form-card">
+    <%= simple_form_for(@itinerary) do |f| %>
+      <%= f.input :address, label: 'Address:', input_html: { class: 'form-control' } %>
+      <%= f.input :date, label: 'Date:', input_html: { class: 'form-control' } %>
+      <%= f.input :start_time, label: 'Start Time:', input_html: { class: 'form-control', step: 900 } %>
+      <%= f.input :end_time, label: 'End Time:', input_html: { class: 'form-control', step: 900 } %>
+      <%= f.input :budget, as: :range, label: 'Budget:', input_html: { class: 'form-control', min: 1, max: 4, step: 1 } %>
+      <%= f.input :interests, as: :check_boxes, collection: ['History', 'Art & Culture', 'Dining', 'Drinks', 'Activity', 'Shopping', 'Outdoors', 'Attraction'], input_html: {multiple: true, include_hidden: false, class: 'btn btn-primary' } %>
+      <%= f.button :submit, 'Create Itinerary', class: 'btn btn-primary mt-3' %>
+    <% end %>
+  </div>
 </div>
+
+<video autoplay loop muted id="bgvid">
+    <source src="/videos/homepage_video.mp4" type="video/mp4">
+</video>
