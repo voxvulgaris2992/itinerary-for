@@ -9,12 +9,6 @@
       <%= f.input :interests, as: :check_boxes, collection: ['History', 'Art & Culture', 'Dining', 'Drinks', 'Activity', 'Shopping', 'Outdoors', 'Attraction'], input_html: {multiple: true, include_hidden: false, class: 'btn btn-primary' } %>
       <%= f.button :submit, 'Create Itinerary', class: 'btn btn-primary mt-3' %>
     <% end %>
-    <br>
-    <div class="repo-link text-right">
-      <strong>
-        <%= link_to "See repository", "https://github.com/voxvulgaris2992/itinerary-for", target: "_blank", rel: 'noopener', style: "text-decoration: none;" %>
-      </strong>
-    </div>
   </div>
 </div>
 
