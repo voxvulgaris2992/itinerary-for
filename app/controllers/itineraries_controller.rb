@@ -1,6 +1,9 @@
 class ItinerariesController < ApplicationController
   def new
     @itinerary = Itinerary.new
+    @itinerary.start_time = Time.zone.parse('09:00')
+    @itinerary.end_time = Time.zone.parse('15:00')
+    @itinerary.date = Date.tomorrow
   end
 
   def create

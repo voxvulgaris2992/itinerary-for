@@ -96,6 +96,7 @@ body {
 .form-card {
   background-color: rgba(255, 255, 255, 0.4);
   padding: 20px;
+  position: relative;
   border-radius: 15px;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
@@ -103,4 +104,29 @@ body {
   &:hover {
     background-color: rgba(255, 255, 255, 0.4);
   }
+}
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+}
+
+.header-link {
+  color: #000;
+  /* change this to the color you want */
+  text-decoration: none;
+  /* removes underline from link */
+}
+
+.repo-link {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  margin: 100px;
+}
+
+.no-underline {
+  text-decoration: none;
 }
