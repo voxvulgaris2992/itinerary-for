@@ -7,7 +7,6 @@ if Rails.env.development? || Rails.env.test?
 end
 
 class EventsBuilder
-  Dotenv.load
   MAPBOX_API_KEY = ENV['MAPBOX_API_KEY']
 
   def initialize(itinerary)
