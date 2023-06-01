@@ -1,4 +1,6 @@
 <div class="form-container my-5">
+  <strong><%= link_to 'Home', root_path, class: 'header-link', style: "text-decoration: none;" %></strong>
+  <br><br>
   <h1 class="mb-4">Itinerary Details:</h1>
   <div class="itinerary-details mb-4 d-flex justify-content-around flex-wrap">
     <p><strong>Address:</strong> <%= @itinerary.address %></p>
@@ -24,7 +26,7 @@
               <p><strong>Rating:</strong> <%= place.rating %></p>
               <p><strong>Review Count:</strong> <%= place.review_count %></p>
               <p><strong>Address:</strong> <%= place.address %></p>
-              <p><strong>Description:</strong> <%= place.description %></p>
+              <p><strong><%= link_to place.description, place.description, target: "_blank", rel: 'noopener', style: "text-decoration: none;" %></strong></p>
               <p><strong>Phone:</strong> <%= place.phone %></p>
               <button id="detailsButton<%= place.id %>" class="btn btn-primary" onclick="toggleDetails('<%= place.id %>')">Details</button>
             </div>
@@ -40,7 +42,8 @@
                   <%= image_tag(place.map_static) %>
                 <% end %>
               </div>
-              <p><strong>Map Link:</strong> <%= link_to 'Google Maps', place.map_link %></p>
+              <br>
+              <p><strong><%= link_to 'Google Maps', place.map_link, target: "_blank", rel: 'noopener', style: "text-decoration: none;" %></strong></p>
               <% if place.review_samples.present? %>
                 <% place.review_samples.each_with_index do |review, index| %>
                   <p><strong>Review <%= index + 1 %> :</strong> <%= review %></p>
