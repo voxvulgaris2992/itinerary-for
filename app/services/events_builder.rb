@@ -1,7 +1,10 @@
 require 'net/http'
-require 'dotenv'
 require 'uri'
 require 'json'
+if Rails.env.development? || Rails.env.test?
+  require 'dotenv'
+  Dotenv.load
+end
 
 class EventsBuilder
   Dotenv.load
