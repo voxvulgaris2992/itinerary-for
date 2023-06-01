@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_185634) do
     t.text "name"
     t.text "description"
     t.text "address"
+    t.text "opening_hours"
     t.text "phone"
     t.text "map_static"
     t.text "map_link"
@@ -65,7 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_31_185634) do
     t.datetime "updated_at", null: false
     t.float "rating"
     t.string "image"
-    t.text "opening_hours"
     t.float "latitude"
     t.float "longitude"
     t.index ["itinerary_id"], name: "index_places_on_itinerary_id"
